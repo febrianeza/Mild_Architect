@@ -21,6 +21,7 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
@@ -98,7 +99,13 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 .withHasStableIds(true)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withIdentifier(0).withName("About").withIcon(GoogleMaterial.Icon.gmd_info).withSelectable(false)
+                        new PrimaryDrawerItem().withIdentifier(0).withName("About").withIcon(GoogleMaterial.Icon.gmd_info).withSelectable(false),
+                        new PrimaryDrawerItem().withIdentifier(1).withName("Share").withIcon(GoogleMaterial.Icon.gmd_share).withSelectable(false),
+                        new PrimaryDrawerItem().withIdentifier(2).withName("Rate this App").withIcon(GoogleMaterial.Icon.gmd_star).withSelectable(false),
+                        new PrimaryDrawerItem().withIdentifier(3).withName("More Apps").withIcon(GoogleMaterial.Icon.gmd_apps).withSelectable(false).withDescription("By LineUp Studio"),
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem().withIdentifier(4).withName("Help").withIcon(GoogleMaterial.Icon.gmd_help).withSelectable(false),
+                        new PrimaryDrawerItem().withIdentifier(5).withName("Changelog").withIcon(GoogleMaterial.Icon.gmd_history).withSelectable(false)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -107,6 +114,21 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
                         switch (itemNames) {
                             case "About":
+
+                                break;
+                            case "Share":
+
+                                break;
+                            case "Rate this App":
+
+                                break;
+                            case "More Apps":
+
+                                break;
+                            case "Help":
+
+                                break;
+                            case "Changelog":
 
                                 break;
                         }
