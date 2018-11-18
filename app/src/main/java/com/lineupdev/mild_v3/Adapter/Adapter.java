@@ -1,6 +1,7 @@
 package com.lineupdev.mild_v3.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.lineupdev.mild_v3.Model.Model;
+import com.lineupdev.mild_v3.Preview;
 import com.lineupdev.mild_v3.R;
 import com.squareup.picasso.Picasso;
 
@@ -52,10 +54,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 //        holder.imageView.getLayoutParams().height = thumb_height;
 
         Picasso.get()
-                .load(model.getThumbnailUrl())
+                .load(model.getThumbnail_url())
                 .fit()
                 .centerCrop()
                 .into(holder.imageView);
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Preview.class);
+                intent.putExtra("imgId", model.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
