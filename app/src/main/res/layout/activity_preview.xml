@@ -17,14 +17,33 @@
             android:background="@color/colorPrimary"
             android:elevation="6dp">
 
-            <TextView
-                style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:id="@+id/toolbarText"/>
+                android:layout_gravity="end"
+                android:padding="16dp"
+                android:src="@drawable/ic_file_download_black_24dp" />
 
         </android.support.v7.widget.Toolbar>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
+
+        <Button
+            android:id="@+id/error_btn_retry"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:text="RETRY"
+            android:textColor="@color/colorAccent"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imagePreview"
@@ -34,10 +53,27 @@
             android:scaleType="fitXY" />
 
         <TextView
+            android:id="@+id/toolbarText"
+            style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
             android:id="@+id/imgCredit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp" />
+            android:layout_marginStart="16dp"
+            android:drawablePadding="16dp"
+            android:drawableStart="@drawable/ic_copyright_black_24dp"
+            android:gravity="center"
+            android:text="Eza Febrian"
+            android:layout_marginBottom="32dp"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </ScrollView>

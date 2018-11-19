@@ -16,9 +16,4 @@ public interface ApiService {
 
     @GET("recent.php")
     Call<List<Model>> getRecent();
-
-    @GET("preview.php")
-    Call<ModelPreview> getContentFromId(
-            @Query("id") String id
-    );
 }

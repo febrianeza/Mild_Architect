@@ -1,11 +1,15 @@
 package com.lineupdev.mild_v3;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,10 +36,17 @@ public class Preview extends AppCompatActivity {
     TextView toolbarText;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.error_btn_retry)
+    Button error_btn_retry;
 
-    private String imgId = null;
-
-    ProgressDialog progressDialog;
+    private String imageTitle = null;
+    private String imageCredit = null;
+    private String imageCreditWebsite = null;
+    private String imageDimension = null;
+    private String imageOriginalUrl = null;
+    private String imagePreviewUrl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,40 +63,59 @@ public class Preview extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        imgId = getIntent().getStringExtra("imgId");
-
-        progressDialog = new ProgressDialog(Preview.this);
+        imageTitle = getIntent().getStringExtra("imgTitle");
+        imageCredit = getIntent().getStringExtra("imgCredit");
+        imageCreditWebsite = getIntent().getStringExtra("imgCreditWebsite");
+        imageDimension = getIntent().getStringExtra("imgDimension");
+        imageOriginalUrl = getIntent().getStringExtra("imgOriginalUrl");
+        imagePreviewUrl = getIntent().getStringExtra("imgPreviewUrl");
 
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/NunitoSans-Light.ttf");
         toolbarText.setTypeface(typeface);
 
-        if (imgId != null) {
-            progressDialog.setMessage("Loading");
-            progressDialog.show();
-            getData();
-        }
-    }
-
-    private void getData() {
-        ApiService apiService = BaseApi.getRetrofit().create(ApiService.class);
-        Call<ModelPreview> previewCall = apiService.getContentFromId(imgId);
-
-        previewCall.enqueue(new Callback<ModelPreview>() {
+        imagePreview.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<ModelPreview> call, Response<ModelPreview> response) {
-                //Toast.makeText(Preview.this, "Credit : " + response.body().getCredit(), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-                Picasso.get().load(response.body().getPreview_url()).into(imagePreview);
-                imgCredit.setText(response.body().getCredit());
-                toolbarText.setText(response.body().getTitle());
-            }
-
-            @Override
-            public void onFailure(Call<ModelPreview> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(Preview.this, "Something wrong..", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                if (imageOriginalUrl != null) {
+                    Intent intent = new Intent(Preview.this, PreviewOriginal.class);
+                    intent.putExtra("imageOriginalUrl", imageOriginalUrl);
+                    startActivity(intent);
+                }
             }
         });
+
+        error_btn_retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        Picasso.get().load(imagePreviewUrl).into(imagePreview, new com.squareup.picasso.Callback() {
+            @Override
+            public void onSuccess() {
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+
+        toolbarText.setText(imageTitle);
+        imgCredit.setText(imageCredit);
+
+        if(imageCreditWebsite != null) {
+            imgCredit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent goToWeb = new Intent(Intent.ACTION_VIEW);
+                    goToWeb.setData(Uri.parse(imageCreditWebsite));
+                    startActivity(goToWeb);
+                }
+            });
+        }
     }
 
     @Override
