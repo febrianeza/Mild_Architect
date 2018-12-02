@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Preview" />
-        <activity android:name=".PreviewOriginal"></activity>
+        <activity android:name=".PreviewOriginal" />
     </application>
 
 </manifest>

@@ -63,6 +63,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Preview.class);
+                intent.putExtra("imgId", model.getId());
                 intent.putExtra("imgTitle", model.getTitle());
                 intent.putExtra("imgCredit", model.getCredit());
                 intent.putExtra("imgCreditWebsite", model.getCredit_website());

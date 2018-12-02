@@ -29,7 +29,7 @@
                     android:layout_gravity="end"
                     android:foreground="?attr/selectableItemBackground"
                     android:padding="16dp"
-                    android:src="@drawable/ic_file_download_black_24dp" />
+                    android:src="@drawable/ic_download" />
 
                 <ProgressBar
                     android:visibility="gone"
@@ -37,7 +37,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:padding="16dp" />
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"/>
 
             </android.support.v7.widget.Toolbar>
 
@@ -112,7 +113,7 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:drawablePadding="12dp"
-            android:drawableStart="@drawable/ic_check_black_24dp"
+            android:drawableStart="@drawable/ic_check"
             android:gravity="center"
             android:paddingEnd="20dp"
             android:paddingStart="12dp"

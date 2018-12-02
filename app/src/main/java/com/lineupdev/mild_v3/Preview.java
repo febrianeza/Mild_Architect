@@ -2,6 +2,7 @@ package com.lineupdev.mild_v3;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -31,10 +30,16 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.lineupdev.mild_v3.Util.DirUtils;
+import com.pepperonas.materialdialog.MaterialDialog;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +67,7 @@ public class Preview extends AppCompatActivity {
     @BindView(R.id.dlProgress)
     ProgressBar dlProgress;
 
+    private String imageId = null;
     private String imageTitle = null;
     private String imageCredit = null;
     private String imageCreditWebsite = null;
@@ -69,6 +75,8 @@ public class Preview extends AppCompatActivity {
     private String imageOriginalUrl = null;
     private String imagePreviewUrl = null;
     private long ImageDownloadId;
+
+    private static String DIRPATH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +93,7 @@ public class Preview extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        imageId = getIntent().getStringExtra("imgId");
         imageTitle = getIntent().getStringExtra("imgTitle");
         imageCredit = getIntent().getStringExtra("imgCredit");
         imageCreditWebsite = getIntent().getStringExtra("imgCreditWebsite");
@@ -98,6 +107,8 @@ public class Preview extends AppCompatActivity {
 
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         registerReceiver(downloadReceiver, filter);
+
+        DIRPATH = DirUtils.getRootDirPath(Preview.this);
 
         imagePreview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,10 +185,78 @@ public class Preview extends AppCompatActivity {
             });
         }
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading");
+
         btnSetAs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Preview.this, "Clicked", Toast.LENGTH_SHORT).show();
+                /*Code Here*/
+                new MaterialDialog.Builder(Preview.this)
+                        .title("SET AS WALLPAPER")
+                        .positiveText("Home Screen")
+                        .negativeText("Lock Screen")
+                        .neutralText("Both")
+                        .buttonCallback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                /*For Home Screen*/
+                                progressDialog.show();
+
+                                Picasso.get()
+                                        .load(imageOriginalUrl)
+                                        .into(new Target() {
+                                            @Override
+                                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                                File file = new File(DIRPATH + "/image");
+                                                if (!file.exists())
+                                                    file.mkdirs();
+
+                                                file = new File(file, imageId);
+                                                if (!file.exists()) {
+                                                    try {
+                                                        FileOutputStream outputStream = new FileOutputStream(file);
+                                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+
+                                                        outputStream.flush();
+                                                        outputStream.close();
+
+                                                    } catch (IOException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+
+                                                progressDialog.dismiss();
+                                            }
+
+                                            @Override
+                                            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                                                e.printStackTrace();
+                                            }
+
+                                            @Override
+                                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                            }
+                                        });
+                            }
+
+                            @Override
+                            public void onNeutral(MaterialDialog dialog) {
+                                super.onNeutral(dialog);
+                                /*For Both*/
+                                Toast.makeText(Preview.this, "Both", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onNegative(MaterialDialog dialog) {
+                                super.onNegative(dialog);
+                                /*For Lock Screen*/
+                                Toast.makeText(Preview.this, "LockScreen", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -254,7 +333,7 @@ public class Preview extends AppCompatActivity {
         request.setDescription("is downloading...");
 
         //set local destination
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, "/Mild_Architecture/" + imageTitle.replaceAll("\\s+","") + "_PhotoBy_" + imageCredit.replaceAll("\\s+","") + ".jpg");
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, "/Mild_Architecture/" + imageTitle.replaceAll("\\s+", "") + "_PhotoBy_" + imageCredit.replaceAll("\\s+", "") + ".jpg");
 
         downloadReference = downloadManager.enqueue(request);
 
@@ -266,7 +345,7 @@ public class Preview extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             //check if the broadcast message is for our Enqueued download
             long referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-            String location = Environment.DIRECTORY_PICTURES + "/Mild_Architecture/" + imageTitle.replaceAll("\\s+","") + "_PhotoBy_" + imageCredit.replaceAll("\\s+","") + ".jpg";
+            String location = Environment.DIRECTORY_PICTURES + "/Mild_Architecture/" + imageTitle.replaceAll("\\s+", "") + "_PhotoBy_" + imageCredit.replaceAll("\\s+", "") + ".jpg";
 
             if (referenceId == ImageDownloadId) {
                 Toast.makeText(Preview.this, "Download completed! : " + location, Toast.LENGTH_SHORT).show();
@@ -276,4 +355,11 @@ public class Preview extends AppCompatActivity {
             btnDownload.setVisibility(View.VISIBLE);
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(downloadReceiver);
+    }
 }
