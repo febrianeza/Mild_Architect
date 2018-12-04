@@ -3,20 +3,28 @@ package com.lineupdev.mild_v3;
 import android.Manifest;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -34,12 +42,17 @@ import com.lineupdev.mild_v3.Util.DirUtils;
 import com.pepperonas.materialdialog.MaterialDialog;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.yalantis.ucrop.UCrop;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,6 +90,10 @@ public class Preview extends AppCompatActivity {
     private long ImageDownloadId;
 
     private static String DIRPATH;
+    private static int DEVICE_WIDTH;
+    private static int DEVICE_HEIGHT;
+    private static int ASPECTX;
+    private static int ASPECTY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +126,17 @@ public class Preview extends AppCompatActivity {
         registerReceiver(downloadReceiver, filter);
 
         DIRPATH = DirUtils.getRootDirPath(Preview.this);
+
+        DeviceDimension dm = new DeviceDimension();
+        DEVICE_HEIGHT = dm.HEIGHT;
+        DEVICE_WIDTH = dm.WIDTH;
+
+        int gcd = GCD(DEVICE_WIDTH, DEVICE_HEIGHT);
+        ASPECTX = DEVICE_WIDTH / gcd;
+        ASPECTY = DEVICE_HEIGHT / gcd;
+
+        Log.d("SCREENRES", "W: " + DEVICE_WIDTH + " H: " + DEVICE_HEIGHT);
+        Log.d("SCREENASPECT", "X: " + ASPECTX + " Y: " + ASPECTY);
 
         imagePreview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,25 +237,45 @@ public class Preview extends AppCompatActivity {
                                         .into(new Target() {
                                             @Override
                                             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                                File file = new File(DIRPATH + "/image");
-                                                if (!file.exists())
-                                                    file.mkdirs();
-
-                                                file = new File(file, imageId);
-                                                if (!file.exists()) {
-                                                    try {
-                                                        FileOutputStream outputStream = new FileOutputStream(file);
-                                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-
-                                                        outputStream.flush();
-                                                        outputStream.close();
-
-                                                    } catch (IOException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                }
+//                                                File file = new File(DIRPATH + "/image");
+//                                                if (!file.exists())
+//                                                    file.mkdirs();
+//
+//                                                file = new File(file, imageId);
+//                                                if (!file.exists()) {
+//                                                    try {
+//                                                        FileOutputStream outputStream = new FileOutputStream(file);
+//                                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+//
+//                                                        outputStream.flush();
+//                                                        outputStream.close();
+//
+//                                                    } catch (IOException e) {
+//                                                        e.printStackTrace();
+//                                                    }
+//                                                }
 
                                                 progressDialog.dismiss();
+
+                                                setWallPaperWithBitmap(Preview.this, bitmap);
+
+//                                                UCrop.of(Uri.fromFile(file), Uri.fromFile(new File(DIRPATH + "/image/" + "c_" + imageId)))
+//                                                        .withAspectRatio(ASPECTX, ASPECTY)
+//                                                        .start(Preview.this);
+
+//                                                CropImage.activity(Uri.fromFile(file))
+//                                                        .setActivityTitle("Set as Wallpaper")
+//                                                        .setAutoZoomEnabled(true)
+//                                                        .setAllowFlipping(false)
+//                                                        .setAllowRotation(false)
+//                                                        .setAllowCounterRotation(false)
+//                                                        .setAspectRatio(ASPECTX,ASPECTY)
+//                                                        .start(Preview.this);
+
+//                                                Intent wallpaperIntent = WallpaperManager.getInstance(Preview.this).getCropAndSetWallpaperIntent(Uri.fromFile(file));
+//                                                wallpaperIntent.setDataAndType(Uri.fromFile(file), "image/*");
+//                                                wallpaperIntent.putExtra("mimeType", "image/*");
+//                                                startActivityForResult(wallpaperIntent, 13451);
                                             }
 
                                             @Override
@@ -361,5 +409,93 @@ public class Preview extends AppCompatActivity {
         super.onDestroy();
 
         unregisterReceiver(downloadReceiver);
+    }
+
+    class DeviceDimension {
+        private int HEIGHT;
+        private int WIDTH;
+
+        DeviceDimension() {
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+
+            this.WIDTH = size.x;
+            this.HEIGHT = size.y;
+        }
+    }
+
+    // simple utility function to calculate GCD
+    private int GCD(int a, int b) {
+        return (b == 0 ? a : GCD(b, a % b));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                setWallpapers(resultUri, data);
+
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
+    }
+
+    private void setWallpapers(Uri resultUri, Intent data) {
+//        try {
+//            InputStream inputStream = getContentResolver().openInputStream(resultUri);
+//
+//            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//
+//            Bitmap bitmap2 = Bitmap.createScaledBitmap(bitmap, DEVICE_WIDTH, DEVICE_HEIGHT, true);
+//
+//            WallpaperManager wallpaperManager = WallpaperManager.getInstance(Preview.this);
+//            try {
+//                wallpaperManager.setBitmap(bitmap2);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+//        Intent wallpaperIntent = WallpaperManager.getInstance(this).getCropAndSetWallpaperIntent(resultUri);
+//        wallpaperIntent.setDataAndType(resultUri, "image/*");
+//        wallpaperIntent.putExtra("mimeType", "image/*");
+//        startActivityForResult(wallpaperIntent, 13451);
+    }
+
+    private static void setWallPaperWithBitmap(Context context, Bitmap bitmap) {
+        WallpaperManager manager = WallpaperManager.getInstance(context);
+        manager.suggestDesiredDimensions(DEVICE_WIDTH, DEVICE_HEIGHT);
+        Uri bitmapUri = getBitmapUri(context, bitmap);
+        if (bitmapUri != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                context.startActivity(manager.getCropAndSetWallpaperIntent(bitmapUri));
+            } else {
+                Intent intent = new Intent(Intent.ACTION_ATTACH_DATA);
+                intent.setDataAndType(bitmapUri, "image/*");
+                intent.putExtra("mimeType", "image/*");
+                context.startActivity(Intent.createChooser(intent, context.getString(R.string.set_as)));
+            }
+        } else {
+            try {
+                manager.setBitmap(bitmap);
+                Toast.makeText(context, "Wallpaper Success", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                Toast.makeText(context, "Wallpaper Failed", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    private static Uri getBitmapUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "MildWallpaper", null);
+        return Uri.parse(path);
     }
 }

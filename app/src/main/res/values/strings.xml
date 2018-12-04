@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Mild Architecture</string>
+    <string name="set_as">Set as</string>
 </resources>
