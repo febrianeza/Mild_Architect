@@ -1,8 +1,5 @@
 package com.lineupdev.mild_v3.Model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class ModelPreview {
     String id;
     String title;

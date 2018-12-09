@@ -6,19 +6,16 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.lineupdev.mild_v3.Model.Model;
 import com.lineupdev.mild_v3.Preview;
 import com.lineupdev.mild_v3.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -65,7 +62,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 Intent intent = new Intent(context, Preview.class);
                 intent.putExtra("imgId", model.getId());
                 intent.putExtra("imgTitle", model.getTitle());
-                intent.putExtra("imgCredit", model.getCredit());
+                intent.putExtra("txtCredit", model.getCredit());
                 intent.putExtra("imgCreditWebsite", model.getCredit_website());
                 intent.putExtra("imgDimension", model.getDimensions());
                 intent.putExtra("imgOriginalUrl", model.getOriginal_url());

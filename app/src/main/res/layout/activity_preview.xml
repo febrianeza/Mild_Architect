@@ -28,17 +28,18 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:foreground="?attr/selectableItemBackground"
+                    android:onClick="btnClick"
                     android:padding="16dp"
                     android:src="@drawable/ic_download" />
 
                 <ProgressBar
-                    android:visibility="gone"
                     android:id="@+id/dlProgress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:paddingTop="16dp"
-                    android:paddingBottom="16dp"/>
+                    android:paddingBottom="16dp"
+                    android:visibility="gone" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -57,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
+                android:onClick="btnClick"
                 android:text="RETRY"
                 android:textColor="@color/colorAccent"
                 android:visibility="gone" />
@@ -66,27 +68,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                android:onClick="btnClick"
                 android:scaleType="fitXY" />
 
             <TextView
-                android:id="@+id/toolbarText"
+                android:id="@+id/txtTitle"
                 style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
                 android:textColor="@color/colorAccent" />
 
             <TextView
-                android:id="@+id/imgCredit"
+                android:id="@+id/txtCredit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
                 android:layout_marginStart="16dp"
-                android:drawablePadding="16dp"
+                android:layout_marginBottom="32dp"
                 android:drawableStart="@drawable/ic_copyright_black_24dp"
+                android:drawablePadding="16dp"
                 android:gravity="center"
                 android:text="Eza Febrian"
                 android:textSize="14sp" />
@@ -98,13 +101,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:foreground="?attr/selectableItemBackground"
+        android:onClick="btnClick"
         app:cardBackgroundColor="@color/colorAccent"
-        app:cardCornerRadius="28dp"
+        app:cardCornerRadius="6dp"
         app:cardElevation="6dp">
 
         <TextView
@@ -112,11 +116,11 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:drawablePadding="12dp"
             android:drawableStart="@drawable/ic_check"
+            android:drawablePadding="12dp"
             android:gravity="center"
-            android:paddingEnd="20dp"
             android:paddingStart="12dp"
+            android:paddingEnd="20dp"
             android:text="Set as"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"

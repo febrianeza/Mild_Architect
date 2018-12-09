@@ -1,6 +1,5 @@
 package com.lineupdev.mild_v3;
 
-import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.lineupdev.mild_v3.API.ApiService;
@@ -16,6 +16,7 @@ import com.lineupdev.mild_v3.API.BaseApi;
 import com.lineupdev.mild_v3.Adapter.Adapter;
 import com.lineupdev.mild_v3.Model.Model;
 import com.lineupdev.mild_v3.Util.GridSpacingItemDecoration;
+import com.lineupdev.mild_v3.Util.Utils;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -50,10 +51,12 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
     Toolbar toolbar;
     @BindView(R.id.titleToolbar)
     TextView titleToolbar;
+    @BindView(R.id.randomProgress)
+    ProgressBar randomProgress;
+    @BindView(R.id.recentProgress)
+    ProgressBar recentProgress;
 
     private Adapter adapter;
-
-    private ProgressDialog progressDialog;
 
     private AccountHeader headerResult = null;
     private Drawer result = null;
@@ -79,11 +82,9 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         randomList.addItemDecoration(new GridSpacingItemDecoration(2, 32, true));
         recentList.addItemDecoration(new GridSpacingItemDecoration(2, 32, true));
 
-        progressDialog = new ProgressDialog(Main.this);
-        progressDialog.setMessage("Loading");
-        progressDialog.show();
-
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        Utils.isStoragePermissionGranted(this);
 
         // NavigationDrawer
         // _________________________________________________________________________________________
@@ -151,7 +152,7 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         call.enqueue(new Callback<List<Model>>() {
             @Override
             public void onResponse(Call<List<Model>> call, Response<List<Model>> response) {
-                progressDialog.dismiss();
+                randomProgress.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
 
                 adapter = new Adapter(Main.this, response.body());
@@ -169,11 +170,11 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
         /*Recent Image Load*/
         ApiService recentService = BaseApi.getRetrofit().create(ApiService.class);
-        Call<List<Model>> recentCall = recentService.getRecent();
+        final Call<List<Model>> recentCall = recentService.getRecent();
         recentCall.enqueue(new Callback<List<Model>>() {
             @Override
             public void onResponse(Call<List<Model>> call, Response<List<Model>> response) {
-                progressDialog.dismiss();
+                recentProgress.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
 
                 adapter = new Adapter(Main.this, response.body());

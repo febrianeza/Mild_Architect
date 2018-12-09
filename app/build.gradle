@@ -61,10 +61,4 @@ dependencies {
 
     //materialdialog
     implementation 'com.github.pepperonas:materialdialog:0.3.4'
-
-    // yalantis imagecropper
-    implementation 'com.github.yalantis:ucrop:2.2.2'
-
-    //arthurhub image cropper
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
 }
