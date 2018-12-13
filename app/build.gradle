@@ -61,4 +61,7 @@ dependencies {
 
     //materialdialog
     implementation 'com.github.pepperonas:materialdialog:0.3.4'
+
+    //expandable layout
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 }

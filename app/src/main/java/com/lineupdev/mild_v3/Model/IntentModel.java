@@ -8,8 +8,9 @@ public class IntentModel {
     private String imageDimension;
     private String imageOriginalUrl;
     private String imagePreviewUrl;
+    private String imageThumbnailUrl;
 
-    public IntentModel(String imageId, String imageTitle, String imageCredit, String imageCreditWebsite, String imageDimension, String imageOriginalUrl, String imagePreviewUrl) {
+    public IntentModel(String imageId, String imageTitle, String imageCredit, String imageCreditWebsite, String imageDimension, String imageOriginalUrl, String imagePreviewUrl, String imageThumbnailUrl) {
         this.imageId = imageId;
         this.imageTitle = imageTitle;
         this.imageCredit = imageCredit;
@@ -17,6 +18,7 @@ public class IntentModel {
         this.imageDimension = imageDimension;
         this.imageOriginalUrl = imageOriginalUrl;
         this.imagePreviewUrl = imagePreviewUrl;
+        this.imageThumbnailUrl = imageThumbnailUrl;
     }
 
     public String getImageId() {
@@ -47,31 +49,7 @@ public class IntentModel {
         return imagePreviewUrl;
     }
 
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
-    }
-
-    public void setImageTitle(String imageTitle) {
-        this.imageTitle = imageTitle;
-    }
-
-    public void setImageCredit(String imageCredit) {
-        this.imageCredit = imageCredit;
-    }
-
-    public void setImageCreditWebsite(String imageCreditWebsite) {
-        this.imageCreditWebsite = imageCreditWebsite;
-    }
-
-    public void setImageDimension(String imageDimension) {
-        this.imageDimension = imageDimension;
-    }
-
-    public void setImageOriginalUrl(String imageOriginalUrl) {
-        this.imageOriginalUrl = imageOriginalUrl;
-    }
-
-    public void setImagePreviewUrl(String imagePreviewUrl) {
-        this.imagePreviewUrl = imagePreviewUrl;
+    public String getImageThumbnailUrl() {
+        return imageThumbnailUrl;
     }
 }

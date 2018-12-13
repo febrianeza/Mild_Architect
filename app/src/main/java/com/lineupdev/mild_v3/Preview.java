@@ -6,10 +6,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -17,11 +19,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lineupdev.mild_v3.Database.DatabaseHelper;
 import com.lineupdev.mild_v3.Dialog.DialogSetWallpaper;
 import com.lineupdev.mild_v3.Model.IntentModel;
 import com.lineupdev.mild_v3.Util.Utils;
@@ -56,17 +60,23 @@ public class Preview extends AppCompatActivity {
     ImageView btnDownload;
     @BindView(R.id.dlProgress)
     ProgressBar dlProgress;
+    @BindView(R.id.btnSave)
+    ImageView btnSave;
+    @BindView(R.id.previewLayout)
+    FrameLayout previewLayout;
 
     long imageDownloadId;
 
     static final String DIRPATH = Environment.DIRECTORY_PICTURES + "/Mild_Architecture/";
     static String FILENAME;
 
+    DatabaseHelper db;
     DownloadManager downloadManager = null;
     IntentModel intentModel;
     DialogSetWallpaper dialogSetWallpaper;
     File files;
     boolean set_wallpaper = false;
+    boolean isSaved = false;
 
     private BroadcastReceiver downloadReceiver = new BroadcastReceiver() {
         @Override
@@ -114,7 +124,8 @@ public class Preview extends AppCompatActivity {
                 getIntent().getStringExtra("imgCreditWebsite"),
                 getIntent().getStringExtra("imgDimension"),
                 getIntent().getStringExtra("imgOriginalUrl"),
-                getIntent().getStringExtra("imgPreviewUrl")
+                getIntent().getStringExtra("imgPreviewUrl"),
+                getIntent().getStringExtra("imgThumbnailUrl")
         );
 
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/NunitoSans-Light.ttf");
@@ -125,6 +136,15 @@ public class Preview extends AppCompatActivity {
         txtCredit.setText(intentModel.getImageCredit());
 
         FILENAME = intentModel.getImageTitle().replaceAll("\\s+", "") + "_PhotoBy_" + intentModel.getImageCredit().replaceAll("\\s+", "") + ".jpg";
+
+        db = new DatabaseHelper(this);
+
+        if (db.dataIsExists(intentModel.getImageId())) {
+            btnSave.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_black_24dp, getApplicationContext().getTheme()));
+            isSaved = true;
+        } else {
+            isSaved = false;
+        }
 
         Picasso.get().load(intentModel.getImagePreviewUrl()).into(imagePreview, new Callback() {
             @Override
@@ -208,6 +228,30 @@ public class Preview extends AppCompatActivity {
                         .show();
 
                 break;
+
+            case R.id.btnSave:
+                if (isSaved) {
+                    db.deleteFavoriteWallpaper(intentModel.getImageId());
+                    isSaved = false;
+                    btnSave.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, getApplicationContext().getTheme()));
+                } else {
+                    savedWallpaper();
+                    isSaved = true;
+                    btnSave.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_black_24dp, getApplicationContext().getTheme()));
+
+                    Snackbar snackbar = Snackbar.make(previewLayout, "Wallpaper favorited", Snackbar.LENGTH_LONG)
+                            .setAction("Go to Favorite", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent toFavorite = new Intent(Preview.this, Favorite.class);
+                                    startActivity(toFavorite);
+                                }
+                            });
+
+                    snackbar.setActionTextColor(Color.WHITE);
+                    snackbar.show();
+                }
+                break;
             case R.id.imagePreview:
                 if (intentModel.getImageOriginalUrl() != null) {
                     Intent intent = new Intent(Preview.this, PreviewOriginal.class);
@@ -220,6 +264,19 @@ public class Preview extends AppCompatActivity {
 
                 break;
         }
+    }
+
+    private void savedWallpaper() {
+        db.favoriteWallpaper(
+                intentModel.getImageId(),
+                intentModel.getImageTitle(),
+                intentModel.getImageCredit(),
+                intentModel.getImageCreditWebsite(),
+                intentModel.getImageDimension(),
+                intentModel.getImageOriginalUrl(),
+                intentModel.getImagePreviewUrl(),
+                intentModel.getImageThumbnailUrl()
+        );
     }
 
     private void setWallpaperAction(File file) {

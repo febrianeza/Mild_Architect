@@ -67,6 +67,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 intent.putExtra("imgDimension", model.getDimensions());
                 intent.putExtra("imgOriginalUrl", model.getOriginal_url());
                 intent.putExtra("imgPreviewUrl", model.getPreview_url());
+                intent.putExtra("imgThumbnailUrl", model.getThumbnail_url());
                 context.startActivity(intent);
             }
         });
