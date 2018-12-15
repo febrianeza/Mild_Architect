@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Favorite">
+    tools:context=".Saved">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -14,10 +14,11 @@
         android:elevation="4dp">
 
         <TextView
+            android:id="@+id/toolbarText"
             style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Favorite" />
+            android:text="Saved" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -44,11 +45,12 @@
                 android:src="@drawable/ic_empty" />
 
             <TextView
+                android:id="@+id/empty_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:text="Your favorite is empty" />
+                android:text="Your collection is empty" />
         </LinearLayout>
     </FrameLayout>
 

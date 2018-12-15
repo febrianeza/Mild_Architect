@@ -31,16 +31,17 @@
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="btnClick"
                     android:padding="16dp"
-                    android:src="@drawable/ic_download" />
+                    android:src="@drawable/ic_file_download_black_24dp" />
 
                 <ProgressBar
+                    android:visibility="gone"
                     android:id="@+id/dlProgress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
-                    android:visibility="gone" />
+                    android:layout_marginEnd="8dp"
+                    android:paddingBottom="16dp" />
 
                 <ImageView
                     android:id="@+id/btnSave"
@@ -50,7 +51,7 @@
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="btnClick"
                     android:padding="16dp"
-                    android:src="@drawable/ic_favorite_border_black_24dp" />
+                    android:src="@drawable/ic_bookmark_border_black_24dp" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -83,6 +84,7 @@
                 android:scaleType="fitXY" />
 
             <TextView
+                android:text="Image Title"
                 android:id="@+id/txtTitle"
                 style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
                 android:layout_width="wrap_content"

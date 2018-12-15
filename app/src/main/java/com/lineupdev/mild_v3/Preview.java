@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.lineupdev.mild_v3.Database.DatabaseHelper;
 import com.lineupdev.mild_v3.Dialog.DialogSetWallpaper;
 import com.lineupdev.mild_v3.Model.IntentModel;
+import com.lineupdev.mild_v3.Util.Font;
 import com.lineupdev.mild_v3.Util.Utils;
 import com.pepperonas.materialdialog.MaterialDialog;
 import com.squareup.picasso.Callback;
@@ -140,7 +141,7 @@ public class Preview extends AppCompatActivity {
         db = new DatabaseHelper(this);
 
         if (db.dataIsExists(intentModel.getImageId())) {
-            btnSave.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_black_24dp, getApplicationContext().getTheme()));
+            btnSave.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark_black_24dp, getApplicationContext().getTheme()));
             isSaved = true;
         } else {
             isSaved = false;
@@ -233,17 +234,17 @@ public class Preview extends AppCompatActivity {
                 if (isSaved) {
                     db.deleteFavoriteWallpaper(intentModel.getImageId());
                     isSaved = false;
-                    btnSave.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp, getApplicationContext().getTheme()));
+                    btnSave.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark_border_black_24dp, getApplicationContext().getTheme()));
                 } else {
                     savedWallpaper();
                     isSaved = true;
-                    btnSave.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_black_24dp, getApplicationContext().getTheme()));
+                    btnSave.setImageDrawable(getResources().getDrawable(R.drawable.ic_bookmark_black_24dp, getApplicationContext().getTheme()));
 
-                    Snackbar snackbar = Snackbar.make(previewLayout, "Wallpaper favorited", Snackbar.LENGTH_LONG)
-                            .setAction("Go to Favorite", new View.OnClickListener() {
+                    Snackbar snackbar = Snackbar.make(previewLayout, "Saved to Collection", Snackbar.LENGTH_LONG)
+                            .setAction("View Saved", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent toFavorite = new Intent(Preview.this, Favorite.class);
+                                    Intent toFavorite = new Intent(Preview.this, Saved.class);
                                     startActivity(toFavorite);
                                 }
                             });

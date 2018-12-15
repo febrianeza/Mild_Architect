@@ -24,7 +24,7 @@ public class Information extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    private static final String PRIVACY_POLICY_URL = "http://156.67.219.143/android/wallppr/privacy_policy.html";
+    private static final String PRIVACY_POLICY_URL = "http://156.67.219.143/android/mild_architecture/privacy-policy.html";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,6 @@ public class Information extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
 
     }
 

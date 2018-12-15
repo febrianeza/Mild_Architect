@@ -19,12 +19,10 @@ public class Faq extends AppCompatActivity {
 
     // FaqItems
     String[][] faqItems = {
-            {"How to download the wallpaper?", "To promote your app through ads, you can create a Google Ads Universal App Campaign or manage existing campaigns from your Play Console."},
-            {"Why when i set as wallpaper, the picture doesnt seem like on the preview", "On the left menu, click User Acquisition >  Google Ads Campaigns. If you need to make changes to a campaign, click a campaign link in the table. You'll be linked to Google Ads to manage your campaign settings."},
-            {"How can i share the wallpaper", "Before users can create a Google Ads campaign, the account owner needs to create the first campaign or link to an existing Google Ads account. For future campaigns, other users with the \"Create Google Ads campaigns\" permission can create campaigns."},
-            {"Is there any spesific screen resolution needed to enjoy the wallpaper through this application?", "Khadafi"},
-            {"are there any copyright on images in this application?", "Kanebos"},
-            {"i see an image that i know, but there is no name of the creator, what should i do?", "kanebos 2"}
+            {"What is this app?", "Mild Architect is an android application that provides simple and elegant architectural photography, and is carefully selected to provide beautiful images to be used as mobile wallpapers. consists of images with 4K resolution of buildings, bridges, skyscrapers etc."},
+            {"How is this app work?", "Just pick whatever image wallpaper that you like and on the bottom right corner you'll see a 'set as' button, and you tap it to set you device wallpaper with image that you pick in this app."},
+            {"Can i just download the image?", "Yes you can, on the top right corner you'll see a download icon button, tap it and your image is downloading."},
+            {"I like a picture, but I don't want to use it as wallpaper for now.", "Save it on favorite page, on the image preview on the top right corner you can see a 'heart' shaped icon, tap it an your image will be saved in favorite page so you can use it as wallpaper or download it in the future."}
     };
 
     @BindView(R.id.faqRecycler)

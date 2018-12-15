@@ -18,6 +18,7 @@ import com.lineupdev.mild_v3.API.ApiService;
 import com.lineupdev.mild_v3.API.BaseApi;
 import com.lineupdev.mild_v3.Adapter.Adapter;
 import com.lineupdev.mild_v3.Model.Model;
+import com.lineupdev.mild_v3.Util.Font;
 import com.lineupdev.mild_v3.Util.GridSpacingItemDecoration;
 import com.lineupdev.mild_v3.Util.Utils;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -59,11 +60,12 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
     ProgressBar randomProgress;
     @BindView(R.id.recentProgress)
     ProgressBar recentProgress;
+    @BindView(R.id.randomError)
+    TextView randomError;
+    @BindView(R.id.recentError)
+    TextView recentError;
 
     private Adapter adapter;
-
-    private AccountHeader headerResult = null;
-    private Drawer result = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +75,13 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
-        Typeface fontToolbar = Typeface.createFromAsset(getAssets(), "fonts/Chapaza.ttf");
-        Typeface fontRandom_Recent = Typeface.createFromAsset(getAssets(), "fonts/NunitoSans-Light.ttf");
-        titleToolbar.setTypeface(fontToolbar);
-        txtRandom.setTypeface(fontRandom_Recent);
-        txtRecent.setTypeface(fontRandom_Recent);
+        titleToolbar.setTypeface(new Font(this).chapaza());
+        txtRandom.setTypeface(new Font(this).nunitoSans());
+        txtRecent.setTypeface(new Font(this).nunitoSans());
 
         recentList.setNestedScrollingEnabled(false);
         randomList.setNestedScrollingEnabled(false);
@@ -92,19 +94,19 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
         // NavigationDrawer
         // _________________________________________________________________________________________
-        headerResult = new AccountHeaderBuilder()
+        AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
                 .withSavedInstance(savedInstanceState)
                 .build();
 
-        result = new DrawerBuilder()
+        Drawer result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withHasStableIds(true)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Favorite").withIcon(GoogleMaterial.Icon.gmd_favorite_border).withSelectable(false),
+                        new PrimaryDrawerItem().withName("Saved").withIcon(GoogleMaterial.Icon.gmd_bookmark_border).withSelectable(false),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("About").withIcon(GoogleMaterial.Icon.gmd_info).withSelectable(false),
                         new PrimaryDrawerItem().withName("Share").withIcon(GoogleMaterial.Icon.gmd_share).withSelectable(false),
@@ -120,8 +122,8 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                         String itemNames = ((Nameable) drawerItem).getName().getText(Main.this);
 
                         switch (itemNames) {
-                            case "Favorite":
-                                Intent savedIntent = new Intent(Main.this, Favorite.class);
+                            case "Saved":
+                                Intent savedIntent = new Intent(Main.this, Saved.class);
                                 startActivity(savedIntent);
                                 break;
                             case "About":
@@ -168,6 +170,7 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
             @Override
             public void onResponse(Call<List<Model>> call, Response<List<Model>> response) {
                 randomProgress.setVisibility(View.GONE);
+                randomError.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
 
                 adapter = new Adapter(Main.this, response.body());
@@ -179,7 +182,9 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
             @Override
             public void onFailure(Call<List<Model>> call, Throwable t) {
-
+                randomProgress.setVisibility(View.GONE);
+                randomError.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -190,6 +195,7 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
             @Override
             public void onResponse(Call<List<Model>> call, Response<List<Model>> response) {
                 recentProgress.setVisibility(View.GONE);
+                recentError.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
 
                 adapter = new Adapter(Main.this, response.body());
@@ -201,7 +207,9 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
             @Override
             public void onFailure(Call<List<Model>> call, Throwable t) {
-
+                recentProgress.setVisibility(View.GONE);
+                recentError.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

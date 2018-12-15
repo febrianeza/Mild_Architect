@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.lineupdev.mild_v3.Util.Font;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -18,6 +20,10 @@ public class About extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.mWebsite)
     TextView mWebsite;
+    @BindView(R.id.toolbarText)
+    TextView toolbarText;
+    @BindView(R.id.mDesc)
+    TextView mDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,10 @@ public class About extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        toolbarText.setTypeface(new Font(this).nunitoSans());
+        mDesc.setTypeface(new Font(this).nunitoSans());
+        mWebsite.setTypeface(new Font(this).nunitoSans());
 
         mWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
