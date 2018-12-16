@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lineupdev.mild_v3.API.ApiService;
 import com.lineupdev.mild_v3.API.BaseApi;
@@ -243,4 +245,24 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         }
     }
 
+    private boolean exit = false;
+
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            Intent intent = new Intent(Main.this, SplashScreen.class);
+            intent.putExtra("exit", "exit");
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Press Back Again to Exit", Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+        }
+    }
 }
