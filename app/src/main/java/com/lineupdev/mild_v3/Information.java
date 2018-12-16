@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import com.lineupdev.mild_v3.Util.Font;
 import com.pepperonas.materialdialog.MaterialDialog;
 import com.pepperonas.materialdialog.model.Changelog;
 import com.pepperonas.materialdialog.model.LicenseInfo;
@@ -23,8 +25,10 @@ public class Information extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.toolbarText)
+    TextView toolbarText;
 
-    private static final String PRIVACY_POLICY_URL = "http://156.67.219.143/android/mild_architecture/privacy-policy.html";
+    private static final String PRIVACY_POLICY_URL = "http://ezafebrian/android/mild_architecture/privacy-policy.html";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,8 @@ public class Information extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+
+        toolbarText.setTypeface(new Font(this).nunitoSans());
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);

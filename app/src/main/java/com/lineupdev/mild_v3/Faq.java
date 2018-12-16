@@ -1,13 +1,15 @@
 package com.lineupdev.mild_v3;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.lineupdev.mild_v3.Adapter.FaqAdapter;
+import com.lineupdev.mild_v3.Util.Font;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,6 +18,8 @@ public class Faq extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.toolbarTitle)
+    TextView toolbarTitle;
 
     // FaqItems
     String[][] faqItems = {
@@ -35,6 +39,8 @@ public class Faq extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+
+        toolbarTitle.setTypeface(new Font(this).nunitoSans());
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
