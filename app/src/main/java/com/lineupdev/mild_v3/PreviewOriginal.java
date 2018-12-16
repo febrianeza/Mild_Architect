@@ -1,6 +1,8 @@
 package com.lineupdev.mild_v3;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -8,6 +10,8 @@ import android.widget.ProgressBar;
 import com.jsibbold.zoomage.ZoomageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +23,7 @@ public class PreviewOriginal extends AppCompatActivity {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    private String imageOriginalUrl = null;
+    static final String DIRPATH = Environment.DIRECTORY_PICTURES + "/Mild_Architecture/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +39,47 @@ public class PreviewOriginal extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-        imageOriginalUrl = getIntent().getStringExtra("imageOriginalUrl");
+        String imageOriginalUrl = getIntent().getStringExtra("imageOriginalUrl");
+        String imageFileName = getIntent().getStringExtra("imageFileName");
 
-        try {
-            Picasso.get().load(imageOriginalUrl).into(imageView, new Callback() {
-                @Override
-                public void onSuccess() {
-                    progressBar.setVisibility(View.GONE);
-                }
+        File path = Environment.getExternalStoragePublicDirectory(DIRPATH);
 
-                @Override
-                public void onError(Exception e) {
+        File file = new File(path, imageFileName).getAbsoluteFile();
+        if (!path.exists())
+            path.mkdirs();
 
-                }
-            });
-        } catch (RuntimeException e) {
-            e.printStackTrace();
+        if (file.exists()) {
+            try {
+                Picasso.get().load(file).into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                Picasso.get().load(imageOriginalUrl).into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -16,6 +16,8 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -45,8 +47,8 @@ public class Preview extends AppCompatActivity {
     ImageView imagePreview;
     @BindView(R.id.txtCredit)
     TextView txtCredit;
-    @BindView(R.id.txtTitle)
-    TextView txtTitle;
+    @BindView(R.id.txtResolution)
+    TextView txtResolution;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.progressBar)
@@ -65,6 +67,8 @@ public class Preview extends AppCompatActivity {
     ImageView btnSave;
     @BindView(R.id.previewLayout)
     FrameLayout previewLayout;
+    @BindView(R.id.txtImageBy)
+    TextView txtImageBy;
 
     long imageDownloadId;
 
@@ -129,12 +133,30 @@ public class Preview extends AppCompatActivity {
                 getIntent().getStringExtra("imgThumbnailUrl")
         );
 
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/NunitoSans-Light.ttf");
-        txtTitle.setTypeface(typeface);
-        txtSetAs.setTypeface(typeface);
+        txtResolution.setTypeface(new Font(this).nunitoSans());
+        txtSetAs.setTypeface(new Font(this).nunitoSans());
+        txtImageBy.setTypeface(new Font(this).nunitoSans());
+        txtCredit.setTypeface(new Font(this).nunitoSans());
 
-        txtTitle.setText(intentModel.getImageTitle());
-        txtCredit.setText(intentModel.getImageCredit());
+        txtResolution.setText(intentModel.getImageDimension());
+
+        //Underline text if imageCreditWebsite is not null
+        if (intentModel.getImageCreditWebsite() != null && !intentModel.getImageCreditWebsite().equals("")) {
+            txtCredit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent goToWeb = new Intent(Intent.ACTION_VIEW);
+                    goToWeb.setData(Uri.parse(intentModel.getImageCreditWebsite()));
+                    startActivity(goToWeb);
+                }
+            });
+
+            SpannableString content = new SpannableString(intentModel.getImageCredit());
+            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+            txtCredit.setText(content);
+        } else {
+            txtCredit.setText(intentModel.getImageCredit());
+        }
 
         FILENAME = intentModel.getImageTitle().replaceAll("\\s+", "") + "_PhotoBy_" + intentModel.getImageCredit().replaceAll("\\s+", "") + ".jpg";
 
@@ -158,17 +180,6 @@ public class Preview extends AppCompatActivity {
 
             }
         });
-
-        if (intentModel.getImageCreditWebsite() != null) {
-            txtCredit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent goToWeb = new Intent(Intent.ACTION_VIEW);
-                    goToWeb.setData(Uri.parse(intentModel.getImageCreditWebsite()));
-                    startActivity(goToWeb);
-                }
-            });
-        }
     }
 
     public void btnClick(View view) {
@@ -257,6 +268,7 @@ public class Preview extends AppCompatActivity {
                 if (intentModel.getImageOriginalUrl() != null) {
                     Intent intent = new Intent(Preview.this, PreviewOriginal.class);
                     intent.putExtra("imageOriginalUrl", intentModel.getImageOriginalUrl());
+                    intent.putExtra("imageFileName", FILENAME);
                     startActivity(intent);
                 }
 
