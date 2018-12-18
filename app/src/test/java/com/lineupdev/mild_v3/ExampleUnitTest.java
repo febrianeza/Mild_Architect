@@ -1,4 +1,4 @@
-package com.lineupdev.mild_v3;
+package com.lineup.mild;
 
 import org.junit.Test;
 

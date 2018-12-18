@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "927526891381",
+    "firebase_url": "https://mild-architect.firebaseio.com",
+    "project_id": "mild-architect",
+    "storage_bucket": "mild-architect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927526891381:android:ea03cc578699dcc9",
+        "android_client_info": {
+          "package_name": "com.lineup.mild"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "927526891381-2dvpvd26cqgte2mh4pgu7pmv7og28sp4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lineup.mild",
+            "certificate_hash": "257d740c1822407a678dbcf8feec9cd60b5b6c2b"
+          }
+        },
+        {
+          "client_id": "927526891381-ne5uj6unrltkmm3e8gqougdgm7ipkukd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjGj7ixUWPOZMI5TfuvaLC4VF_MzX3dCs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "927526891381-ne5uj6unrltkmm3e8gqougdgm7ipkukd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

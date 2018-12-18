@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lineupdev.mild_v3">
+    package="com.lineup.mild">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
@@ -25,7 +25,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.lineupdev.mild_v3.fileprovider"
+            android:authorities="com.lineup.mild.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -44,6 +44,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2503073334640478~9888298859"/>
     </application>
 
 </manifest>

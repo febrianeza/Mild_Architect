@@ -1,4 +1,4 @@
-package com.lineupdev.mild_v3;
+package com.lineup.mild;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.lineupdev.mild_v3", appContext.getPackageName());
+        assertEquals("com.lineup.mild", appContext.getPackageName());
     }
 }
