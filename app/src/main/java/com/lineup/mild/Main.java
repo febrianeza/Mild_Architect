@@ -168,7 +168,7 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        MobileAds.initialize(this, getResources().getString(R.string.banner_test_unit));
+        MobileAds.initialize(this, getResources().getString(R.string.banner_main_unit));
         adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 

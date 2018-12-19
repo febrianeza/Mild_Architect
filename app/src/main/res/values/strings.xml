@@ -6,9 +6,11 @@
     <string name="app_short_desc">Mild Architect - HD Architectural Wallpaper Collection</string>
     <string name="share_sub">Try out this apps, its cool</string>
     <string name="copyright">All the wallpapers in this app are under common creative licenses and the credit goes to their owners. these images are not endorsed by any of the prospective owners, and the images are used simply for aesthetic purposes. no copyrght infringement is intended, and any request to remove one of the images/logos/names will be honored. This is and unofficial application and we are not affiliated with, approved sponsored, or approved spesifically by any company.</string>
+
     <string name="banner_test_unit">ca-app-pub-3940256099942544/6300978111</string>
     <string name="banner_main_unit">ca-app-pub-2503073334640478/6328327792</string>
     <string name="banner_preview_unit">ca-app-pub-2503073334640478/5669319418</string>
+
     <string name="app_intro_page2">Set and Download High Quality Wallpaper</string>
     <string name="app_intro_page3">Saved an image for further use to your collection.</string>
     <string name="app_intro_page4">Nice and simple to download and set image as wallpaper.</string>

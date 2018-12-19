@@ -192,7 +192,7 @@ public class Preview extends AppCompatActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        MobileAds.initialize(this, getResources().getString(R.string.banner_test_unit));
+        MobileAds.initialize(this, getResources().getString(R.string.banner_preview_unit));
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
