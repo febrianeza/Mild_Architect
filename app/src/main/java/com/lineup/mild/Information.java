@@ -234,7 +234,7 @@ public class Information extends AppCompatActivity {
         List<Changelog> changelogs = new ArrayList<>();
 
 
-        changelogs.add(new Changelog("1.0.0", "2018-01-01", new ReleaseInfo("Initial Release")));
+        changelogs.add(new Changelog("1.0.0", "2018-12-19", new ReleaseInfo("Initial Release")));
         return changelogs;
     }
 }

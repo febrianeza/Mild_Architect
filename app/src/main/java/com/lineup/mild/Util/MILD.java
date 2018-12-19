@@ -16,7 +16,4 @@ public class MILD {
     public static final String FIREBASE_LOAD_RECENT_SUCCESS = "load_recent_success";
     public static final String FIREBASE_LOAD_RANDOM_FAILED = "load_random_failed";
     public static final String FIREBASE_LOAD_RECENT_FAILED = "load_recent_failed";
-
-    public static final String BANNER_MAIN_AD_UNIT = "ca-app-pub-2503073334640478/6328327792";
-    public static final String BANNER_PREVIEW_AD_UNIT = "ca-app-pub-2503073334640478/5669319418";
 }

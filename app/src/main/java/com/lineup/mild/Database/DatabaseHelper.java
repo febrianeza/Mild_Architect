@@ -37,12 +37,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void favoriteWallpaper(String id, String title, String credit, String credit_website, String dimensions, String original_url, String preview_url, String thumbnail_url) {
+    public void favoriteWallpaper(String id, String credit, String credit_website, String dimensions, String original_url, String preview_url, String thumbnail_url) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbModel.COLUMN_IMAGE_ID, id);
-        contentValues.put(DbModel.COLUMN_IMAGE_TITLE, title);
         contentValues.put(DbModel.COLUMN_IMAGE_CREDIT, credit);
         contentValues.put(DbModel.COLUMN_IMAGE_CREDIT_WEBSITE, credit_website);
         contentValues.put(DbModel.COLUMN_IMAGE_DIMENSION, dimensions);
@@ -59,7 +58,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(DbModel.TABLE_NAME,
                 new String[]{
                         DbModel.COLUMN_IMAGE_ID,
-                        DbModel.COLUMN_IMAGE_TITLE,
                         DbModel.COLUMN_IMAGE_CREDIT,
                         DbModel.COLUMN_IMAGE_CREDIT_WEBSITE,
                         DbModel.COLUMN_IMAGE_DIMENSION,
@@ -76,7 +74,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Prepare object
         DbModel dbModel = new DbModel(
                 cursor.getString(cursor.getColumnIndex(DbModel.COLUMN_IMAGE_ID)),
-                cursor.getString(cursor.getColumnIndex(DbModel.COLUMN_IMAGE_TITLE)),
                 cursor.getString(cursor.getColumnIndex(DbModel.COLUMN_IMAGE_CREDIT)),
                 cursor.getString(cursor.getColumnIndex(DbModel.COLUMN_IMAGE_CREDIT_WEBSITE)),
                 cursor.getString(cursor.getColumnIndex(DbModel.COLUMN_IMAGE_DIMENSION)),
@@ -105,7 +102,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 DbModel dbModel = new DbModel();
 
                 dbModel.setU_id(cursor.getString(cursor.getColumnIndex(DbModel.COLUMN_IMAGE_ID)));
-                dbModel.setTitle(cursor.getString(cursor.getColumnIndex(DbModel.COLUMN_IMAGE_TITLE)));
                 dbModel.setCredit(cursor.getString(cursor.getColumnIndex(DbModel.COLUMN_IMAGE_CREDIT)));
                 dbModel.setCredit_website(cursor.getString(cursor.getColumnIndex(DbModel.COLUMN_IMAGE_CREDIT_WEBSITE)));
                 dbModel.setDimensions(cursor.getString(cursor.getColumnIndex(DbModel.COLUMN_IMAGE_DIMENSION)));
@@ -148,7 +144,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + DbModel.TABLE_NAME
                 + " WHERE " + DbModel.COLUMN_IMAGE_ID + " =?";
 
-        Cursor cursor = db.rawQuery(selectQuery, new String[] {id});
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{id});
         if (cursor.getCount() <= 0) {
             cursor.close();
             db.close();

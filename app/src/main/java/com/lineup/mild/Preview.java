@@ -132,7 +132,6 @@ public class Preview extends AppCompatActivity {
 
         intentModel = new IntentModel(
                 getIntent().getStringExtra("imgId"),
-                getIntent().getStringExtra("imgTitle"),
                 getIntent().getStringExtra("txtCredit"),
                 getIntent().getStringExtra("imgCreditWebsite"),
                 getIntent().getStringExtra("imgDimension"),
@@ -166,7 +165,7 @@ public class Preview extends AppCompatActivity {
             txtCredit.setText(intentModel.getImageCredit());
         }
 
-        FILENAME = intentModel.getImageTitle().replaceAll("\\s+", "") + "_PhotoBy_" + intentModel.getImageCredit().replaceAll("\\s+", "") + ".jpg";
+        FILENAME = "PhotoBy_" + intentModel.getImageCredit().replaceAll("\\s+", "") + "_" + intentModel.getImageId() + ".jpg";
 
         db = new DatabaseHelper(this);
 
@@ -191,7 +190,7 @@ public class Preview extends AppCompatActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
+        MobileAds.initialize(this, getResources().getString(R.string.banner_test_unit));
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
@@ -296,7 +295,6 @@ public class Preview extends AppCompatActivity {
     private void savedWallpaper() {
         db.favoriteWallpaper(
                 intentModel.getImageId(),
-                intentModel.getImageTitle(),
                 intentModel.getImageCredit(),
                 intentModel.getImageCreditWebsite(),
                 intentModel.getImageDimension(),

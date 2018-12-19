@@ -44,12 +44,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Model model = models.get(position);
 
-//        final int thumb_height = (int) holder.px2dp(model.getThumbnailHeight());
-//
-//        Log.d("THUMB_HEIGHT", "height position " + position + " = " + thumb_height);
-
-//        holder.imageView.getLayoutParams().height = thumb_height;
-
         Picasso.get()
                 .load(model.getThumbnail_url())
                 .fit()
@@ -61,7 +55,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             public void onClick(View v) {
                 Intent intent = new Intent(context, Preview.class);
                 intent.putExtra("imgId", model.getId());
-                intent.putExtra("imgTitle", model.getTitle());
                 intent.putExtra("txtCredit", model.getCredit());
                 intent.putExtra("imgCreditWebsite", model.getCredit_website());
                 intent.putExtra("imgDimension", model.getDimensions());

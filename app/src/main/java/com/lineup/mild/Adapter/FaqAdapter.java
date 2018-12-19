@@ -55,7 +55,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
         return faqItems.length;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements ExpandableLayout.OnExpansionUpdateListener, View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements ExpandableLayout.OnExpansionUpdateListener, View.OnClickListener {
         @BindView(R.id.expand_button)
         TextView expand_button;
         @BindView(R.id.expandable_layout)

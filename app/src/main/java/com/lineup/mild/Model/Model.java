@@ -3,7 +3,6 @@ package com.lineup.mild.Model;
 public class Model {
 
     String id;
-    String title;
     String credit;
     String credit_website;
     String dimensions;
@@ -11,9 +10,8 @@ public class Model {
     String preview_url;
     String thumbnail_url;
 
-    public Model(String id, String title, String credit, String credit_website, String dimensions, String original_url, String preview_url, String thumbnail_url) {
+    public Model(String id, String credit, String credit_website, String dimensions, String original_url, String preview_url, String thumbnail_url) {
         this.id = id;
-        this.title = title;
         this.credit = credit;
         this.credit_website = credit_website;
         this.dimensions = dimensions;
@@ -24,10 +22,6 @@ public class Model {
 
     public String getId() {
         return id;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String getCredit() {

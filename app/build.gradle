@@ -58,6 +58,9 @@ dependencies {
 
     //admob
     implementation 'com.google.android.gms:play-services-ads:17.1.2'
+
+    //AppIntro
+    implementation 'com.github.apl-devs:appintro:v4.2.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

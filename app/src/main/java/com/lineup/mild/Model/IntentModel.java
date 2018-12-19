@@ -2,7 +2,6 @@ package com.lineup.mild.Model;
 
 public class IntentModel {
     private String imageId;
-    private String imageTitle;
     private String imageCredit;
     private String imageCreditWebsite;
     private String imageDimension;
@@ -10,9 +9,8 @@ public class IntentModel {
     private String imagePreviewUrl;
     private String imageThumbnailUrl;
 
-    public IntentModel(String imageId, String imageTitle, String imageCredit, String imageCreditWebsite, String imageDimension, String imageOriginalUrl, String imagePreviewUrl, String imageThumbnailUrl) {
+    public IntentModel(String imageId, String imageCredit, String imageCreditWebsite, String imageDimension, String imageOriginalUrl, String imagePreviewUrl, String imageThumbnailUrl) {
         this.imageId = imageId;
-        this.imageTitle = imageTitle;
         this.imageCredit = imageCredit;
         this.imageCreditWebsite = imageCreditWebsite;
         this.imageDimension = imageDimension;
@@ -23,10 +21,6 @@ public class IntentModel {
 
     public String getImageId() {
         return imageId;
-    }
-
-    public String getImageTitle() {
-        return imageTitle;
     }
 
     public String getImageCredit() {

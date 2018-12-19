@@ -26,7 +26,7 @@ public class Faq extends AppCompatActivity {
             {"What is this app?", "Mild Architect is an android application that provides simple and elegant architectural photography, and is carefully selected to provide beautiful images to be used as mobile wallpapers. consists of images with 4K resolution of buildings, bridges, skyscrapers etc."},
             {"How is this app work?", "Just pick whatever image wallpaper that you like and on the bottom right corner you'll see a 'set as' button, and you tap it to set you device wallpaper with image that you pick in this app."},
             {"Can i just download the image?", "Yes you can, on the top right corner you'll see a download icon button, tap it and your image is downloading."},
-            {"I like a picture, but I don't want to use it as wallpaper for now.", "Save it on favorite page, on the image preview on the top right corner you can see a 'heart' shaped icon, tap it an your image will be saved in favorite page so you can use it as wallpaper or download it in the future."}
+            {"I like a picture, but I don't want to use it as wallpaper for now.", "Save it to collection, on the image preview on the top right corner you can see a 'bookmark' shaped icon, tap it an your image will be saved to your collection, so you can use it as wallpaper or download it in the future."}
     };
 
     @BindView(R.id.faqRecycler)

@@ -15,9 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -28,7 +26,6 @@ import com.lineup.mild.Model.Model;
 import com.lineup.mild.Util.Font;
 import com.lineup.mild.Util.GridSpacingItemDecoration;
 import com.lineup.mild.Util.MILD;
-import com.lineup.mild.Util.Utils;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -101,8 +98,6 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        Utils.isStoragePermissionGranted(this);
-
         // NavigationDrawer
         // _________________________________________________________________________________________
         AccountHeader headerResult = new AccountHeaderBuilder()
@@ -173,7 +168,7 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
+        MobileAds.initialize(this, getResources().getString(R.string.banner_test_unit));
         adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 

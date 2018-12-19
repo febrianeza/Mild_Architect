@@ -52,7 +52,6 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
             public void onClick(View v) {
                 Intent intent = new Intent(context, Preview.class);
                 intent.putExtra("imgId", dbModel.getU_id());
-                intent.putExtra("imgTitle", dbModel.getTitle());
                 intent.putExtra("txtCredit", dbModel.getCredit());
                 intent.putExtra("imgCreditWebsite", dbModel.getCredit_website());
                 intent.putExtra("imgDimension", dbModel.getDimensions());
