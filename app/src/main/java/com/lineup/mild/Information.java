@@ -233,8 +233,18 @@ public class Information extends AppCompatActivity {
     private List<Changelog> getChangelog() {
         List<Changelog> changelogs = new ArrayList<>();
 
-
-        changelogs.add(new Changelog("1.0.0", "2018-12-19", new ReleaseInfo("Initial Release")));
+        changelogs.add(new Changelog("2.0.0", "2018-12-20", new ReleaseInfo(
+                "Change app name to Mild Architect",
+                "Spesific category to Architectural Wallpaper only",
+                "Major change on server-side improvements",
+                "Device support only to Android 21+",
+                "Image up to 4K Resolution"
+        )));
+        changelogs.add(new Changelog("1.0.5", "2018-11-04", new ReleaseInfo("Performance improvement")));
+        changelogs.add(new Changelog("1.0.3", "2018-04-12", new ReleaseInfo("Download Count Bug fixes")));
+        changelogs.add(new Changelog("1.0.2", "2017-11-26", new ReleaseInfo("Minor bug fixes", "Server-side improvements")));
+        changelogs.add(new Changelog("1.0.1", "2017-10-31", new ReleaseInfo("Bug fixes and performance improvement")));
+        changelogs.add(new Changelog("1.0.0", "2017-10-30", new ReleaseInfo("Initial Release")));
         return changelogs;
     }
 }

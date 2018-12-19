@@ -188,6 +188,8 @@ public class Preview extends AppCompatActivity {
             }
         });
 
+        Utils.isStoragePermissionGranted(this);
+
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         MobileAds.initialize(this, getResources().getString(R.string.banner_test_unit));
