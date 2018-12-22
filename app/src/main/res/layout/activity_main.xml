@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/banner_main_unit" />
+        ads:adUnitId="ca-app-pub-2503073334640478/6328327792" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"

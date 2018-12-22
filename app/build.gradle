@@ -6,7 +6,7 @@ android {
         applicationId "com.lineup.mild"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 6
+        versionCode 8
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

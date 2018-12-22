@@ -175,7 +175,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             ads:adSize="SMART_BANNER"
-            ads:adUnitId="@string/banner_preview_unit" />
+            ads:adUnitId="ca-app-pub-2503073334640478/5669319418" />
     </LinearLayout>
 
 </FrameLayout>
