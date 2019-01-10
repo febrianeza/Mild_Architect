@@ -10,16 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.lineup.mild.API.ApiService;
 import com.lineup.mild.API.BaseApi;
@@ -71,9 +66,7 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
     TextView randomError;
     @BindView(R.id.recentError)
     TextView recentError;
-    @BindView(R.id.adView)
-    AdView adView;
-    AdRequest adRequest;
+
     private Adapter adapter;
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -83,8 +76,6 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-
-        MobileAds.initialize(this, MILD.ADMOB_APP_ID);
 
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -171,43 +162,6 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 .build();
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
-        adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-                Log.d("ADMOB", "Ad Loaded");
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-                Log.d("ADMOB", "Ad Failed to Load " + errorCode);
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-                Log.d("ADMOB", "Ad Opened");
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-                Log.d("ADMOB", "Ad Left Application");
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when when the user is about to return
-                // to the app after tapping on an ad.
-                Log.d("ADMOB", "Ad Closed");
-            }
-        });
 
         callData();
     }
@@ -319,32 +273,5 @@ public class Main extends AppCompatActivity implements SwipeRefreshLayout.OnRefr
                 }
             }, 3 * 1000);
         }
-    }
-
-    /** Called when leaving the activity */
-    @Override
-    public void onPause() {
-        if (adView != null) {
-            adView.pause();
-        }
-        super.onPause();
-    }
-
-    /** Called when returning to the activity */
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (adView != null) {
-            adView.resume();
-        }
-    }
-
-    /** Called before the activity is destroyed */
-    @Override
-    public void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
-        }
-        super.onDestroy();
     }
 }

@@ -6,7 +6,7 @@ android {
         applicationId "com.lineup.mild"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 8
+        versionCode 9
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -55,9 +55,6 @@ dependencies {
 
     //firebase
     implementation 'com.google.firebase:firebase-core:16.0.6'
-
-    //admob
-    implementation 'com.google.android.gms:play-services-ads:17.1.2'
 
     //AppIntro
     implementation 'com.github.apl-devs:appintro:v4.2.3'

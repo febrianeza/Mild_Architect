@@ -17,7 +17,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,14 +26,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.lineup.mild.Database.DatabaseHelper;
-import com.lineup.mild.Database.Preferences;
 import com.lineup.mild.Dialog.DialogSetWallpaper;
 import com.lineup.mild.Model.IntentModel;
 import com.lineup.mild.Util.Font;
@@ -77,15 +70,12 @@ public class Preview extends AppCompatActivity {
     FrameLayout previewLayout;
     @BindView(R.id.txtImageBy)
     TextView txtImageBy;
-    @BindView(R.id.adView)
-    AdView adView;
 
     long imageDownloadId;
 
     static final String DIRPATH = Environment.DIRECTORY_PICTURES + "/Mild_Architecture/";
     static String FILENAME;
 
-    InterstitialAd mInterstitialAd;
     DatabaseHelper db;
     DownloadManager downloadManager = null;
     IntentModel intentModel;
@@ -114,7 +104,6 @@ public class Preview extends AppCompatActivity {
                 btnDownload.setVisibility(View.VISIBLE);
                 Toast.makeText(Preview.this, "Download completed: " + file, Toast.LENGTH_SHORT).show();
                 mFirebaseAnalytics.logEvent(MILD.FIREBASE_DOWNLOAD_SUCCESS, null);
-                downloadForAds();
             }
         }
     };
@@ -197,64 +186,6 @@ public class Preview extends AppCompatActivity {
         Utils.isStoragePermissionGranted(this);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(MILD.ADMOB_INTERSTITIAL);
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-                Log.d("ADMOB", "Ad Loaded");
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-                Log.d("ADMOB", "Ad Failed to Load");
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-                Log.d("ADMOB", "Ad Opened");
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-                Log.d("ADMOB", "Ad Left Application");
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when when the user is about to return
-                // to the app after tapping on an ad.
-                Log.d("ADMOB", "Ad Closed");
-            }
-        });
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                // Load the next interstitial.
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());
-            }
-        });
-    }
-
-    private void downloadForAds() {
-        Preferences.setKeyPopUpAdsIncrement(getBaseContext(), Preferences.getDownloadForAds(getBaseContext()) + 1);
-        if (Preferences.getDownloadForAds(getBaseContext()) % 4 == 0) {
-            if (mInterstitialAd.isLoaded()) {
-                mInterstitialAd.show();
-            }
-        }
     }
 
     public void btnClick(View view) {
@@ -389,7 +320,6 @@ public class Preview extends AppCompatActivity {
         }
         dialogSetWallpaper.setDownloadFinished(true);
         dialogSetWallpaper.hideDialog();
-        downloadForAds();
     }
 
     private long downloadWallpaper(String imageOriginalUrl) {
@@ -423,25 +353,11 @@ public class Preview extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         unregisterReceiver(downloadReceiver);
-        if (adView != null) {
-            adView.pause();
-        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         registerReceiver(downloadReceiver, filter);
-        if (adView != null) {
-            adView.resume();
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        if (adView != null) {
-            adView.destroy();
-        }
-        super.onDestroy();
     }
 }

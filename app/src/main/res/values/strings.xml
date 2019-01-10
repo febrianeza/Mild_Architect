@@ -12,4 +12,14 @@
     <string name="app_intro_page4">Nice and simple to download and set image as wallpaper.</string>
     <string name="app_intro_page5">This app needs permission for storage to work.</string>
     <string name="app_intro_page6">GET STARTED</string>
+
+    <string name="admob_app_id">ca-app-pub-2503073334640478~9888298859</string>
+    <string name="banner_main">ca-app-pub-2503073334640478/7833717241</string>
+    <string name="banner_preview">ca-app-pub-2503073334640478/9453210234</string>
+    <string name="interstitial_preview">ca-app-pub-2503073334640478/5869188440</string>
+
+
+    <string name="admob_app_id_sample">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="banner_sample">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_sample">ca-app-pub-3940256099942544/1033173712</string>
 </resources>

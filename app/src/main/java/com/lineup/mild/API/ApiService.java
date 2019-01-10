@@ -9,9 +9,9 @@ import retrofit2.http.GET;
 
 public interface ApiService {
 
-    @GET("random.php")
+    @GET("random")
     Call<List<Model>> getRandom();
 
-    @GET("recent.php")
+    @GET("recent")
     Call<List<Model>> getRecent();
 }

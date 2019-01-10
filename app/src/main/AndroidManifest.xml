@@ -48,7 +48,7 @@
             android:label="Intro"/>
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-2503073334640478~9888298859"/>
+            android:value="@string/admob_app_id"/>
     </application>
 
 </manifest>
