@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimaryDark">#262626</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#2b2b2b</color>
     <color name="colorBtn">#7986cb</color>
     <color name="cardColor">#dcdcdc</color>
     <color name="resColor">#cecece</color>
     <color name="iconColor">#434343</color>
+    <color name="blue">#076DDA</color>
 </resources>

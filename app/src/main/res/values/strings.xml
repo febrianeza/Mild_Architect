@@ -1,25 +1,20 @@
 <resources>
-    <string name="app_name">Mild Architect</string>
+    <string name="app_name">Architectural Wallpaper</string>
     <string name="set_as">Set as</string>
-    <string name="app_desc">Overview\nMild Architect is an android application that provides simple and elegant architectural photography, and is carefully selected to provide beautiful images to be used as mobile wallpapers. consists of images with 4K resolution of buildings, bridges, skyscrapers etc.\n\nDeveloper</string>
-    <string name="developer_website">http://ezafebrian.com</string>
-    <string name="app_short_desc">Mild Architect - HD Architectural Wallpaper Collection</string>
+    <string name="app_desc">Overview\nArchitectural Wallpaper is an android application that provides simple and elegant architectural photography, and is carefully selected to provide beautiful images to be used as mobile wallpapers. consists of images with 4K resolution of buildings, bridges, skyscrapers etc.\n\nDeveloper</string>
+    <string name="developer_website">https://eza.lineupdev.space</string>
+    <string name="app_short_desc">Free HD Architectural Wallpaper Collection</string>
     <string name="share_sub">Try out this apps, its cool</string>
     <string name="copyright">All the wallpapers in this app are under common creative licenses and the credit goes to their owners. these images are not endorsed by any of the prospective owners, and the images are used simply for aesthetic purposes. no copyrght infringement is intended, and any request to remove one of the images/logos/names will be honored. This is and unofficial application and we are not affiliated with, approved sponsored, or approved spesifically by any company.</string>
+    <string name="bug_report">You can email us about the bug that you find at lineupdeveloper@gmail.com</string>
 
     <string name="app_intro_page2">Set and Download High Quality Wallpaper</string>
     <string name="app_intro_page3">Saved an image for further use to your collection.</string>
     <string name="app_intro_page4">Nice and simple to download and set image as wallpaper.</string>
     <string name="app_intro_page5">This app needs permission for storage to work.</string>
-    <string name="app_intro_page6">GET STARTED</string>
-
-    <string name="admob_app_id">ca-app-pub-2503073334640478~9888298859</string>
-    <string name="banner_main">ca-app-pub-2503073334640478/7833717241</string>
-    <string name="banner_preview">ca-app-pub-2503073334640478/9453210234</string>
-    <string name="interstitial_preview">ca-app-pub-2503073334640478/5869188440</string>
-
-
-    <string name="admob_app_id_sample">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="banner_sample">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial_sample">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="app_intro_page6">Get Started</string>
+    <string name="private_policy_url">https://eza.lineupdev.space/apps/mild_architecture/privacy-policy.html</string>
+    <string name="my_paypal">paypal.me/EzaFebrian</string>
+    <string name="my_paypal_https">https://paypal.me/EzaFebrian</string>
+    <string name="paypal_text">Perhaps, help me out with server cost?</string>
 </resources>

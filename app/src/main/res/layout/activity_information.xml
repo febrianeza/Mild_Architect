@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Information">
+    tools:context=".activity.Information">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Information" />
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/mChangelog"
@@ -68,5 +68,17 @@
         android:onClick="infoClick"
         android:padding="16dp"
         android:text="Copyright" />
+
+    <TextView
+        android:id="@+id/mBugReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_bug_report_black_24dp"
+        android:drawablePadding="16dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center|left"
+        android:onClick="infoClick"
+        android:padding="16dp"
+        android:text="Report Bug" />
 
 </LinearLayout>

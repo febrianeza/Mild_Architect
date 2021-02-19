@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -15,16 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Main">
+        <activity android:name=".activity.Main">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".Preview" />
-        <activity android:name=".PreviewOriginal" />
+        <activity android:name=".activity.Preview" />
+        <activity android:name=".activity.PreviewOriginal" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.lineup.mild.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -33,22 +34,22 @@
                 android:resource="@xml/fileprovider" />
         </provider>
 
-        <activity android:name=".Saved" />
-        <activity android:name=".About" />
-        <activity android:name=".Information" />
-        <activity android:name=".Faq" />
-        <activity android:name=".SplashScreen">
+        <activity android:name=".activity.Saved" />
+        <activity android:name=".activity.About" />
+        <activity android:name=".activity.Information" />
+        <activity android:name=".activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.lineup.mild.Intro"
+        <activity android:name="com.lineup.mild.activity.Intro"
             android:label="Intro"/>
+
         <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_app_id"/>
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
